@@ -47,6 +47,11 @@ class NatureRemoCloud(NatureRemoBase):
     return self._get('/1/devices')
   def get_appliances(self):
     return self._get('/1/appliances')
+  def push_button(self, app_id, app_type, button_name):
+    if app_type not in ['TV', 'LIGHT']:
+      raise ValueError('Appliance type must be either "TV" or "LIGHT"')
+    self._post(f'/1/appliances/{app_id}/{app_type.lower()}',
+               button = button_name)
 
 class NatureRemoLocal(NatureRemoBase):
   def __init__(self, hostname):
