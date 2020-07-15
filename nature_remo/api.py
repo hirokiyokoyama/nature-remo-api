@@ -53,6 +53,20 @@ class NatureRemoCloud(NatureRemoBase):
     self._post(f'/1/appliances/{app_id}/{app_type.lower()}',
                button = button_name)
 
+  def set_aircon_state(self, app_id, **args):
+    self._post(f'/1/appliances/{app_id}/aircon_settings', **args)
+
+  def create_appliance(self, **args):
+    return self._post('/1/appliances', **args)
+  def get_signals(self, app_id):
+    return self._get(f'/1/appliances/{app_id}/signals')
+  def create_signal(self, app_id, **args):
+    if isinstance(args['message'], dict):
+      args['message'] = json.dumps(args['message'])
+    return self._post(f'/1/appliances/{app_id}/signals', **args)
+  def send_signal(self, signal_id):
+    return self._post(f'/1/signals/{signal_id}/send')
+
 class NatureRemoLocal(NatureRemoBase):
   def __init__(self, hostname):
     header = {'accept': 'application/json', 'X-Requested-With' : 'curl'}

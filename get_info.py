@@ -34,10 +34,17 @@ appliances = cloud_api.get_appliances()
 for appliance in appliances:
   print(f'<{appliance["nickname"]}>')
   print(f'     ID: {appliance["id"]}')
-  print(f'  Model: {appliance["model"]["name"]}')
-  print(f' Device: {appliance["device"]["name"]}')
+  if appliance["model"]:
+    print(f'  Model: {appliance["model"]["name"]}')
+  if appliance["device"]:
+    print(f' Device: {appliance["device"]["name"]}')
   print(f'   Type: {appliance["type"]}')
-  if appliance['type'] != 'AC':
+  if appliance['type'] not in ['AC', 'IR']:
     buttons = appliance[appliance['type'].lower()]["buttons"]
     print(f'Buttons: {[b["name"] for b in buttons]}')
+  if appliance['type'] == 'AC':
+    print(appliance['settings'])
+  if appliance['signals']:
+    buttons = appliance["signals"]
+    print(f'Signals: {[b["name"] for b in buttons]}')
   print()

@@ -13,12 +13,16 @@ def to_hex(arr):
   hex = lambda x: f'{x:02x}'
   return '0x '+' '.join(map(hex, arr))
 
-signal = local_api.capture_signal()
-print(f'Format: {signal["format"]}')
-print(f'Custom: {to_hex(signal["custom"])}')
-print(f'  Data: {to_hex(signal["data"])}')
-print(f'  Freq: {signal["freq"]}kHz')
-print(f'     T: {signal["T"]}us')
+signal = local_api.capture_signal(decode=False)
+print(signal)
+import matplotlib.pyplot as plt
+plt.plot(signal['data'], 'o-')
+plt.show()
+#print(f'Format: {signal["format"]}')
+#print(f'Custom: {to_hex(signal["custom"])}')
+#print(f'  Data: {to_hex(signal["data"])}')
+#print(f'  Freq: {signal["freq"]}kHz')
+#print(f'     T: {signal["T"]}us')
 
 #message = local_api.get('/messages')
 #print(remo.post('/messages', **message))
